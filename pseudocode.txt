@@ -1,0 +1,15 @@
+setup
+    direction how to play
+  choose a secret word
+  choose players
+
+def ask_user_for_guess
+  guess = gets.chomp
+end
+
+is guess correct?
+    if / else statement 
+  compare guess against letters in secret word
+
+
+Add CommentC
