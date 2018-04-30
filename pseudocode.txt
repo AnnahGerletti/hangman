@@ -1,7 +1,8 @@
 setup
     direction how to play
-  choose a secret word
-  choose players
+  choose a secret word easy start with one, also easy to test 
+  
+  one player set number of lives 
 
 def ask_user_for_guess
   guess = gets.chomp
@@ -11,5 +12,8 @@ is guess correct?
     if / else statement 
   compare guess against letters in secret word
 
+  use .chars to break up word into an arr of strings
 
-Add CommentC
+  
+
+
