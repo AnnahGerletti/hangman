@@ -13,6 +13,6 @@ end
 
 answer = false 
 while !answer do 
-     print "Do you want to play Hangman, yes or no"
+     puts "Do you want to play Hangman, yes or no"
     answer = ask_player
 end
