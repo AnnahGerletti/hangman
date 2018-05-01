@@ -1,0 +1,26 @@
+DefEndAlignment:
+  AutoCorrect: true
+
+EndAlignment:
+  AutoCorrect: true
+
+EndWith:
+  AutoCorrect: true
+
+StartWith:
+  AutoCorrect: true
+
+UniqBeforePluck:
+  AutoCorrect: true
+
+JSONLoad:
+  AutoCorrect: true
+
+NumericPredicate:
+  AutoCorrect: true
+
+TrailingWhitespace:
+  AutoCorrect: true
+
+LineLength:
+  Max: 160
