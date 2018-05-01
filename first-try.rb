@@ -37,10 +37,12 @@ end
 
 winning = false
 guess_arr = []
+count = 0
 
-until winning do 
+while count < 2 do 
     guess = make_a_guess
     guess_arr.push(guess)
     print guess_arr
+    count += 1
 
 end
