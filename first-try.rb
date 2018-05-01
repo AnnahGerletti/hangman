@@ -1,4 +1,4 @@
-SECRET = 'love'.chars #the chars method breaks up string into arr of strings
+SECRET = 'dog'.chars #the chars method breaks up string into arr of strings
 
 def ask_player
     answer = gets.chomp
@@ -17,7 +17,7 @@ end
 def run 
     answer = false 
     while !answer do 
-         puts "Do you want to play Hangman, yes or no"
+         puts 'Do you want to play Hangman, yes or no'
         answer = ask_player
     end
 end
@@ -28,8 +28,7 @@ run # calling the run method, incased the second answer variable
 # get some guesses, then print them out added new guess on old printed guess
 
 def make_a_guess
-
-    puts "please guess a letter"
+    puts 'please guess a letter'
     guess = gets.chomp
     puts 'this your guess - ' + guess
     puts "this is also your guess #{guess}"
