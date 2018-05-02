@@ -31,3 +31,28 @@ could use .include?
   this worked, but only returns true. I need to find away to compaire the secret and the guess if it matches put it in place of a dash and if not says somthing like 'not the right letter'
 
 
+  Later Version of Hangman
+
+  use classes to hold the methods 
+  within the classes will 
+
+class Greeter
+def initialize(name = "World")
+ @name = name
+ end
+def say_hi
+ puts "Hi #{@name}!"
+ end
+ def say_bye
+ puts "Bye #{@name}, come back soon"
+ end
+ end
+
+ greeter = Greeter.new("Pat")
+=> @name="Pat">
+ greeter.say_hi
+Hi Pat!
+ greeter.say_bye
+Bye Pat, come back soon
+
+
