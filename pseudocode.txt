@@ -19,4 +19,15 @@ Possiple goals
 #comapring imputs to secret 
 # print out secret with dashes  
 
+Ideas 
+
+the secret is already divided into an arr of strings so now I need a method that comapires each imput to all the letters in the secret
+
+set the secret as -- dashes then representing each letter, once a letter is right then its replaced with that letter 
+
+Add conditions, count turns, if you solve the puzzle then you are a winner. or if you get to the end and puzzle is not solved but turns are used up they did not win 
+
+could use .include? 
+  this worked, but only returns true. I need to find away to compaire the secret and the guess if it matches put it in place of a dash and if not says somthing like 'not the right letter'
+
 

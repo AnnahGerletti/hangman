@@ -31,14 +31,14 @@ def make_a_guess
   guess = gets.chomp
   puts 'this your guess - ' + guess
   puts "this is also your guess #{guess}"
-  guess
+  SECRET.include? guess
 end
 
 winning = false
 guess_arr = []
 count = 0
 
-while count < 2
+until count == 2
   guess = make_a_guess
   guess_arr.push(guess)
   print guess_arr
@@ -46,5 +46,3 @@ while count < 2
 
 end
 
-#
-# line 42 change the while loop to an until and adding the conditional that count = 2. Stops the loop on line 19. Why is this happening?
