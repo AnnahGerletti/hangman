@@ -5,7 +5,8 @@
 lives = 10
 guess_arr = []
 won = false
-SECRET = 'ball'
+
+SECRET = 'ball'.chars
 
 
 puts 'Normal Hangman rules'
@@ -20,10 +21,12 @@ puts 'Here we go'
     guess_arr.push(guess)
     if SECRET.include? guess
       puts 'that was a correct guess'
-      guess_arr
+      print guess_arr
     else
       puts 'nope, guess again'
       puts "you have #{lives} lives left"
       lives -= 1
+      puts 'this is what you have already guessed'
+      puts guess_arr.to_s
     end
-  end
+  end 
