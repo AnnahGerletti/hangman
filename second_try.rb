@@ -17,10 +17,12 @@ puts 'Here we go'
   while lives >= 0 
     puts 'guess a letter'
     guess = gets.chomp
+    guess_arr.push(guess)
     if SECRET.include? guess
-      puts guess
+      puts 'that was a correct guess'
+      guess_arr
     else
-      puts 'guess another letter'
+      puts 'nope, guess again'
       puts "you have #{lives} lives left"
       lives -= 1
     end
