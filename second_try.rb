@@ -26,7 +26,7 @@ puts 'Every Worng guess you will lose a life'
 puts 'Here we go'
 
   while lives >= 0 
-    puts 'guess a letter'
+    puts 'guess a letter' 
     guess = gets.chomp
     guess_arr.push(guess)
     
