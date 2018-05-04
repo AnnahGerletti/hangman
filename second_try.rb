@@ -33,16 +33,14 @@ puts 'Here we go'
     if SECRET.include? guess
       puts 'that was a correct guess'
       print guess_arr
-      puts dashes (guess_arr)
-
     else
       puts 'nope, guess again'
       puts "you have #{lives} lives left"
       lives -= 1
       puts 'this is what you have already guessed'
       puts guess_arr.to_s
-      puts dashes (guess_arr)
     end
+    puts dashes guess_arr
   end
 
   
