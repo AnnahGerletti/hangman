@@ -8,6 +8,17 @@ won = false
 
 SECRET = 'ball'.chars
 
+def dashes (guess_arr)
+ SECRET.map do |chr|
+   if guess_arr.include? chr
+    chr 
+   else
+    '-'
+   end
+  end.join ','
+end
+
+
 
 puts 'Normal Hangman rules'
 puts 'You have 10 lives to guess the word'
@@ -18,9 +29,11 @@ puts 'Here we go'
     puts 'guess a letter'
     guess = gets.chomp
     guess_arr.push(guess)
+    
     if SECRET.include? guess
       puts 'that was a correct guess'
       print guess_arr
+      puts dashes (guess_arr)
 
     else
       puts 'nope, guess again'
@@ -28,5 +41,9 @@ puts 'Here we go'
       lives -= 1
       puts 'this is what you have already guessed'
       puts guess_arr.to_s
+      puts dashes (guess_arr)
     end
-  end 
+  end
+
+  
+
