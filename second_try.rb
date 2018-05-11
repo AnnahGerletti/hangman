@@ -31,9 +31,17 @@ def game_won_2?(guess_arr)
   SECRET.all? { |letter| guess_arr.include?(letter) }
 end
 
-def game_over?(guess_arr)
+def game_over?(lives, guess_arr)
   lives <= 0 || game_won?(guess_arr)
 end
+
+def ran_out_of_lives?(lives)
+  if lives.zero?
+    puts 'You ran out of lives'
+    puts "The word was #{SECRET}"
+  end
+end
+
 
 
 
@@ -42,12 +50,12 @@ puts 'You have 10 lives to guess the word'
 puts 'Every Wrong guess you will lose a life'
 puts "\n"'Here we go'
 
-  until game_over?(guess_arr)
+  until game_over?(lives, guess_arr)
     puts 'Guess a letter:'
     guess = gets.chomp
     guess_arr.push(guess)
 
-    if SECRET.include? guess
+    if SECRET.include?(guess)
       puts 'that was a correct guess'
       print guess_arr
     else
@@ -56,13 +64,15 @@ puts "\n"'Here we go'
 
       lives -= 1
 
-      puts 'this is what you have already guessed'
+      puts 'What you have already guessed'
       puts guess_arr.to_s
     end
     
     puts dashes(guess_arr)
 
-    if game_won_2?(guess_arr) 
+    puts ran_out_of_lives?(lives)
+
+    if game_won_2?(guess_arr)
       puts 'Congradulations, You Won the game!'
     end
   end
