@@ -37,11 +37,16 @@ class HigherLower
     @won
   end
 
+  def valid_guess?(input) 
+    # to_i turns non integers to zero.
+    player_guess = input.to_i
+    player_guess > 0 && player_guess < 100
+  end
+
   def guess(number)
     return false if game_over?
 
     if number == @random_num
-      puts 'You have gueesed the number, You Win!'
       @won = true
     elsif number > @random_num
       puts 'too high'
@@ -62,12 +67,18 @@ class PlayHighLow
 
   def play
     puts 'Welcome to the High Low game!'
+    until @game.game_over?
+      @game.print_status
+      puts 'Please guess a Number between 1-100'
+      player_guess = gets.chomp.to_i
+      if @game.valid_guess?(player_guess)
+        @game.guess(player_guess)
+      else
+        puts 'Invalid answer guess again'
+      end
+
+    end
     @game.print_status
-    puts 'Please guess a Number between 1-100'
-    players_guess = gets.chomp
-    @game.guess(players_guess)
-    # until @game.game_over?
-    # end
   end
 end
 
