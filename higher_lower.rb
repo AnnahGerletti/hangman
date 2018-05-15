@@ -37,14 +37,17 @@ class HigherLower
     @won
   end
 
-  def valid_guess?(input) 
-    # to_i turns non integers to zero.
-    player_guess = input.to_i
+  def valid_guess?(player_guess)
     player_guess > 0 && player_guess < 100
   end
 
   def guess(number)
     return false if game_over?
+
+
+    # refactor make it so it stores every gyess made instead of the boolean
+    # then remove @won
+
 
     if number == @random_num
       @won = true
