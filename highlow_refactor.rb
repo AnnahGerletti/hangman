@@ -47,6 +47,7 @@ class Game
   end
 
   def take_turn(input)
+    puts @random_num
     @saved_guess.push(input)
     input - @random_num
   end
@@ -65,25 +66,26 @@ class Game
 end
 
 class View
-  def tohigh_or_tolow (turn_result)
-    if turn_result > 0 
-      puts "Too High"
-    elsif turn_result < 0 
-      puts "Too Low"
+  def tohigh_or_tolow(turn_result)
+    if turn_result.positive?
+      puts 'Too High'
+    elsif turn_result.negative?
+      puts 'Too Low'
     else
-      puts "Just Right"
+      puts 'Just Right'
     end
+    turn_result
   end
 
   def print_turn_status(turn_result, game)
     tohigh_or_tolow(turn_result)
-    puts "you have #{game.lives_left} lives left"
-
+    
     if game.lost?
       puts "game over. The hidden Number was #{game.hidden_num}"
     elsif game.won?
       puts 'Winner'
     end
+puts "#{game.lives_left} lives remaining"
   end
 
   def welcome
