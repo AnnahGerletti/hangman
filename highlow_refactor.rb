@@ -7,38 +7,37 @@
 
 class HigherLower
 
-  def initialize
-    @game = HigherLowerGame.new
-    @view = HigherLowerView.new
+  def initialize(game, view)
+    @game = game
+    @view = view
   end
 
   def start
     @view.welcome
     until @game.over?
       input = @view.read_input(input)
+      
       turn_result = @game.take_turn(input)
-      @view.print_turn_status(turn_result)
+      @view.print_turn_status(turn_result, @game)
     end
   end
 end
 
-class HigherLowerGame
+class Game
   NUMBERS = Array(1..100)
-  INITIAL_LIVES = 6 # constant class var
+  INITIAL_LIVES = 6
   
   def initialize
     @random_num = NUMBERS.sample()
     @saved_guess = []
-    @lives = INITIAL_LIVES
   end
 
   def over?
-    puts "hello the random num is #{@random_num}"
     lost? || won?
   end
 
   def lost?
-    @lives.zero? || @saved_guess.length == 6
+    @saved_guess.length == 6
   end
 
   def won?
@@ -46,26 +45,45 @@ class HigherLowerGame
   end
 
   def take_turn(input)
-    
+    @saved_guess.push(input)
+    input - @random_num
+  end
+
+  def hidden_num
+    @random_num
+  end
+
+  def lives_left
+    if won?
+      INITIAL_LIVES - @saved_guess.length + 1
+    else 
+      INITIAL_LIVES - @saved_guess.length
+   end
   end
 
 
 end
 
-class HigherLowerView
-  INITIAL_LIVES = 6 # constant class var
+class View
 
-  def initialize
-    @saved_guess = []
-    @lives = INITIAL_LIVES
+  def tohigh_or_tolow (turn_result)
+    if turn_result > 0 
+      puts "Too High"
+    elsif turn_result < 0 
+      puts "Too Low"
+    else
+      puts "Just Right"
+    end
   end
 
-  def print_turn_status(turn_result)
-    puts "you have #{@lives} lives left"
-    if lost?
-      puts "game over. The hidden Number was #{@random_num}"
-    elsif won?
+  def print_turn_status(turn_result, game)
+    tohigh_or_tolow(turn_result)
+    puts "you have #{game.lives_left} lives left"
+    if game.lost?
+      puts "game over. The hidden Number was #{game.hidden_num}"
+    elsif game.won?
       puts 'Winner'
+
     end
   end
 
@@ -76,12 +94,9 @@ class HigherLowerView
 
   def read_input(input)
     puts 'Please guess a Number between 1-100'
-    input = gets.chomp
-    @saved_guess.push(input)
-    puts "#{@saved_guess}"
-    @lives =- 1
+    input = gets.chomp.to_i
 
   end
 end
 
-HigherLower.new.start
+HigherLower.new(Game.new, View.new).start
