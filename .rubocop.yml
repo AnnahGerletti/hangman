@@ -24,3 +24,6 @@ TrailingWhitespace:
 
 LineLength:
   Max: 160
+
+AllCops:
+  TargetRubyVersion: 2.3
