@@ -9,6 +9,7 @@ SECRET = 'ball'.chars
 
 def dashes(guess_arr)
   SECRET.map do |chr|
+    
    if guess_arr.include?(chr)
     chr
    else
@@ -42,13 +43,10 @@ def ran_out_of_lives?(lives)
   end
 end
 
-
-
-
 puts 'Normal Hangman rules'
 puts 'You have 10 lives to guess the word'
 puts 'Every Wrong guess you will lose a life'
-puts "\n"'Here we go'
+puts 'Here we go'
 
   until game_over?(lives, guess_arr)
     puts 'Guess a letter:'
