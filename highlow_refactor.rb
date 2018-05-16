@@ -6,7 +6,6 @@
 #
 
 class HigherLower
-
   def initialize(game, view)
     @game = game
     @view = view
@@ -15,8 +14,7 @@ class HigherLower
   def start
     @view.welcome
     until @game.over?
-      input = @view.read_input(input)
-      
+      input = @view.read_input(@game)
       turn_result = @game.take_turn(input)
       @view.print_turn_status(turn_result, @game)
     end
@@ -30,6 +28,10 @@ class Game
   def initialize
     @random_num = NUMBERS.sample()
     @saved_guess = []
+  end
+
+  def valid_guess?(input)
+    input >0 && input < 100
   end
 
   def over?
@@ -58,14 +60,11 @@ class Game
       INITIAL_LIVES - @saved_guess.length + 1
     else 
       INITIAL_LIVES - @saved_guess.length
-   end
+    end
   end
-
-
 end
 
 class View
-
   def tohigh_or_tolow (turn_result)
     if turn_result > 0 
       puts "Too High"
@@ -79,11 +78,11 @@ class View
   def print_turn_status(turn_result, game)
     tohigh_or_tolow(turn_result)
     puts "you have #{game.lives_left} lives left"
+
     if game.lost?
       puts "game over. The hidden Number was #{game.hidden_num}"
     elsif game.won?
       puts 'Winner'
-
     end
   end
 
@@ -92,10 +91,16 @@ class View
     puts 'You have 6 chances to guess the right number'
   end
 
-  def read_input(input)
+  def read_input(game)
     puts 'Please guess a Number between 1-100'
     input = gets.chomp.to_i
 
+    until game.valid_guess?(input) 
+      puts "enter valid number"
+      input = gets.chomp.to_i
+    end
+
+    input
   end
 end
 
