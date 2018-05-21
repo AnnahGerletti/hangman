@@ -47,7 +47,6 @@ class Game
   end
 
   def take_turn(input)
-    puts @random_num
     @saved_guess.push(input)
     input - @random_num
   end
@@ -85,7 +84,8 @@ class View
     elsif game.won?
       puts 'Winner'
     end
-puts "#{game.lives_left} lives remaining"
+
+   puts "#{game.lives_left} lives remaining"
   end
 
   def welcome
@@ -97,8 +97,8 @@ puts "#{game.lives_left} lives remaining"
     puts 'Please guess a Number between 1-100'
     input = gets.chomp.to_i
 
-    until game.valid_guess?(input) 
-      puts "enter valid number"
+    until game.valid_guess?(input)
+      puts 'enter valid number'
       input = gets.chomp.to_i
     end
 
