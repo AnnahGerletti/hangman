@@ -10,10 +10,11 @@ class Hangman
 
   def start_game
     @view.welcome
+    @view.print_dashes(@game)
     until @game.over?
-      guess = @view.read_guess()
+      guess = @view.read_guess
       turn_result = @game.take_turn(guess)
-      @view.print_turn_status(turn_resutl, @game)
+      @view.print_turn_status(turn_result, @game)
     end
   end
 end
@@ -23,7 +24,7 @@ class Dictionary
   SECRET = ['private', 'lacking', 'apple']
 
   def initialize
-    @secret = SECRET.sample()
+    @secret = SECRET.sample().chars
   end
 
   def secret_word
@@ -55,9 +56,19 @@ class Game
   end
 
   def take_turn(guess)
-
+    @saved_guess.push(guess)
+    puts "#{@saved_guess}"
   end
 
+  def dashes
+    Dictionary::SECRET.map do |char|
+      if @saved_guess.include?(char)
+        char
+      else
+        '-'
+      end
+    end.join ','
+  end
 
 end
 
@@ -69,11 +80,16 @@ class View
     puts 'Lets play'
   end
 
-  def read_guess()
-     puts 'OVER 3'
+  def read_guess
+    puts 'OVER 3'
     puts 'Please guess a letter a-z'
     guess = gets.chomp
   end
+
+  def print_dashes(game)
+    puts game.dashes
+  end
+
 end
 
 Hangman.new(View.new, Game.new, Dictionary.new).start_game
