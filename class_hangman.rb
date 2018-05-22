@@ -10,67 +10,75 @@ class Hangman
 
   def start_game
     @view.welcome
-    @view.print_dashes(@game)
-    until @game.over?
+    @view.print_dashes(@game, @dictionary.secret)
+    # My dashes that are printed don't match my words
+    until @game.over?(@dictionary.secret)
       guess = @view.read_guess
-      turn_result = @game.take_turn(guess)
-      @view.print_turn_status(turn_result, @game)
+      @game.take_turn(guess)
+      @view.print_guess_arr(@game.saved_guess)
+      turn_result = @game.correct_guess(guess, @dictionary.secret)
+      @view.print_turn_status(turn_result, @game, @dictionary.secret)
     end
   end
 end
 
 
+# Dictionary::SECRET # => blueprint
+# @dictionary = Dictionary.new # => house
 class Dictionary
-  SECRET = ['private', 'lacking', 'apple']
+  attr_reader :secret
+  SECRET = ['watermelon', 'orange', 'apple', 'kiwi', 'grape']
 
   def initialize
     @secret = SECRET.sample().chars
   end
-
-  def secret_word
-    @secret
-  end
 end
 
 class Game
+  attr_reader :saved_guess
   INITIAL_LIVES = 10
 
   def initialize
    @saved_guess = []
   end
 
-  def over?
-    puts 'OVER'
-    lost? || won?
+  def over?(word)
+    lost? || won?(word)
   end
 
   def lost?
-    puts 'OVER 1'
-    INITIAL_LIVES.zero? 
+    INITIAL_LIVES.zero?
   end
 
-  def won?
-    # How do I see the word that is randomly picked
-    puts 'OVER 2'
-    Dictionary::SECRET.all? { |letter| @saved_guess.include?(letter)}
+  def won?(word)
+    word.all? { |letter| saved_guess.include?(letter)}
   end
 
   def take_turn(guess)
-    @saved_guess.push(guess)
-    puts "#{@saved_guess}"
+    saved_guess.push(guess)
   end
 
-  def dashes
-    Dictionary::SECRET.map do |char|
-      if @saved_guess.include?(char)
+  def correct_guess(added_guess, word)
+    # need to connect this to take_turn or call it in constuctor 
+    if word.include?(added_guess)
+      return true 
+    else
+     return false
+    end
+  end
+
+  def dashes(word)
+    word.map do |char|
+      if saved_guess.include?(char)
         char
       else
         '-'
       end
     end.join ','
   end
-
 end
+
+
 
 class View
 
@@ -81,13 +89,26 @@ class View
   end
 
   def read_guess
-    puts 'OVER 3'
     puts 'Please guess a letter a-z'
     guess = gets.chomp
   end
 
-  def print_dashes(game)
-    puts game.dashes
+  def print_dashes(game, word)
+    puts game.dashes(word)
+  end
+
+  def print_turn_status(turn_result, game, word)
+    if turn_result == true
+      puts 'Correct guess'
+      print_dashes(game, word)
+    else 
+      puts 'Wrong, Guess again'
+      print_dashes(game, word)
+    end
+  end
+
+  def print_guess_arr(saved_guess)
+    print saved_guess
   end
 
 end
