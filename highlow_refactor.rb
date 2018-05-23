@@ -22,7 +22,7 @@ class HigherLower
 end
 
 class Game
-  NUMBERS = Array(1..100)
+  attr_reader :saved_guess
   INITIAL_LIVES = 6
   
   def initialize(random_num = NUMBERS.sample)
@@ -39,7 +39,7 @@ class Game
   end
 
   def lost?
-    @saved_guess.length == INITIAL_LIVES
+    @saved_guess.length >= INITIAL_LIVES
   end
 
   def won?
