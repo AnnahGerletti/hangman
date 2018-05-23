@@ -1,4 +1,4 @@
-
+require "byebug"
 
 class Hangman
 
@@ -11,11 +11,11 @@ class Hangman
   def start_game
     @view.welcome
     @view.print_dashes(@game, @dictionary.secret)
-    # My dashes that are printed don't match my words
     until @game.over?(@dictionary.secret)
       guess = @view.read_guess
       @game.take_turn(guess)
       @view.print_guess_arr(@game.saved_guess)
+      @game.lives_left( @dictionary.secret)
       turn_result = @game.correct_guess(guess, @dictionary.secret)
       @view.print_turn_status(turn_result, @game, @dictionary.secret)
     end
@@ -30,45 +30,50 @@ class Dictionary
   SECRET = ['watermelon', 'orange', 'apple', 'kiwi', 'grape']
 
   def initialize
-    @secret = SECRET.sample().chars
+    @secret = SECRET.sample.chars
   end
 end
 
 class Game
-  attr_reader :saved_guess
-  INITIAL_LIVES = 10
+  attr_reader :saved_guess, :initial_lives
 
   def initialize
    @saved_guess = []
+   @initial_lives = 10
   end
 
-  def over?(word)
-    lost? || won?(word)
+  def lives_left(secret)
+    initial_lives - (saved_guess.uniq - secret).size
+  end
+
+  def over?(secret)
+    lost? || won?(secret)
   end
 
   def lost?
-    INITIAL_LIVES.zero?
+    initial_lives.zero?
   end
 
-  def won?(word)
-    word.all? { |letter| saved_guess.include?(letter)}
+  def won?(secret)
+    secret.all? do |letter|
+      saved_guess.include?(letter)
+    end
   end
 
   def take_turn(guess)
     saved_guess.push(guess)
   end
 
-  def correct_guess(added_guess, word)
-    # need to connect this to take_turn or call it in constuctor 
-    if word.include?(added_guess)
-      return true 
+  def correct_guess(added_guess, secret)
+    if secret.include?(added_guess)
+     true
     else
-     return false
+     false
     end
   end
 
-  def dashes(word)
-    word.map do |char|
+  def dashes(secret)
+    secret.map do |char|
       if saved_guess.include?(char)
         char
       else
@@ -77,8 +82,6 @@ class Game
     end.join ','
   end
 end
-
-
 
 class View
 
@@ -98,13 +101,16 @@ class View
   end
 
   def print_turn_status(turn_result, game, word)
+
+    saved_guess = game.saved_guess
+
     if turn_result == true
       puts 'Correct guess'
-      print_dashes(game, word)
     else 
       puts 'Wrong, Guess again'
-      print_dashes(game, word)
     end
+    print_dashes(game, word)
+    puts "#{game.lives_left(word)} lives remaining"
   end
 
   def print_guess_arr(saved_guess)
