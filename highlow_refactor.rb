@@ -25,8 +25,8 @@ class Game
   NUMBERS = Array(1..100)
   INITIAL_LIVES = 6
   
-  def initialize
-    @random_num = NUMBERS.sample()
+  def initialize(random_num = NUMBERS.sample)
+    @random_num = random_num
     @saved_guess = []
   end
 
@@ -39,7 +39,7 @@ class Game
   end
 
   def lost?
-    @saved_guess.length == 6
+    @saved_guess.length == INITIAL_LIVES
   end
 
   def won?
@@ -106,4 +106,4 @@ class View
   end
 end
 
-HigherLower.new(Game.new, View.new).start
+# HigherLower.new(Game.new, View.new).start
