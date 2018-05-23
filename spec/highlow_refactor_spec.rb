@@ -17,19 +17,42 @@ RSpec.describe Game do
     end
   end
   
-  describe "#lost?" do
-    it 'is true when length of saved_guess arr == initial lives' do
-      game = Game.new
+  describe '#lost?' do
+    it 'is true when player has ran out of lives' do
+      game = Game.new(6)
       
+      #make 6 incorrect guesses
+      game.take_turn(3)
+      game.take_turn(3)
+      game.take_turn(3)
+      game.take_turn(3)
+      game.take_turn(3)
+      game.take_turn(3)
 
       expect(game.lost?).to be_truthy
     end
-    it 'is false when saved_guess arr != initial lives'do
+
+    it 'is false when there at least one life left' do
+      game = Game.new(44)
+
+      game.take_turn(3)
+      game.take_turn(3)
+      game.take_turn(3)
+      game.take_turn(3)
+      game.take_turn(3)
+
+      expect(game.lost?).to be_falsey
     end
   end
 
   describe "#over?" do
-    it 'is true when lost? or won? ' do
-    end
+    it 'is over when all lives are lost'
+
+    it 'is over when correct number is guessed'
+
+    it 'is not over when number has not been guessed and there are lives left'
+
+
+
   end
 end
