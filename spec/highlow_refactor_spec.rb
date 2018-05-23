@@ -46,11 +46,35 @@ RSpec.describe Game do
   end
 
   describe "#over?" do
-    it 'is over when all lives are lost'
+    it 'is over when all lives are lost' do
+      game = Game.new(77)
 
-    it 'is over when correct number is guessed'
+      game.take_turn(3)
+      game.take_turn(9)
+      game.take_turn(8)
+      game.take_turn(7)
+      game.take_turn(6)
+      game.take_turn(5)
 
-    it 'is not over when number has not been guessed and there are lives left'
+      expect(game.over?).to be_truthy
+    end
+
+    it 'is over when correct number is guessed' do
+      game = Game.new(44)
+
+      game.take_turn(44)
+
+      expect(game.over?).to be_truthy
+    end
+
+    it 'is not over when number has not been guessed and there are lives left' do
+      game = Game.new(33)
+
+      game.take_turn(55)
+      game.take_turn(4)
+
+      expect(game.over?).to be_falsey
+    end
 
 
 
