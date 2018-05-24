@@ -22,9 +22,10 @@ class HigherLower
 end
 
 class Game
-  attr_reader :saved_guess
+  attr_reader :saved_guess, :random_num
   INITIAL_LIVES = 6
-  
+  NUMBERS = Array(1..100)
+
   def initialize(random_num = NUMBERS.sample)
     @random_num = random_num
     @saved_guess = []
@@ -39,11 +40,11 @@ class Game
   end
 
   def lost?
-    @saved_guess.length >= INITIAL_LIVES
+    saved_guess.length == INITIAL_LIVES
   end
 
   def won?
-    @saved_guess.include?(@random_num)
+    saved_guess.include?(random_num)
   end
 
   def take_turn(input)
@@ -51,16 +52,8 @@ class Game
     input - @random_num
   end
 
-  def hidden_num
-    @random_num
-  end
-
   def lives_left
-    if won?
-      INITIAL_LIVES - @saved_guess.length + 1
-    else 
       INITIAL_LIVES - @saved_guess.length
-    end
   end
 end
 
@@ -80,12 +73,12 @@ class View
     tohigh_or_tolow(turn_result)
     
     if game.lost?
-      puts "game over. The hidden Number was #{game.hidden_num}"
+      puts "Game Over. The hidden Number was #{game.random_num}"
     elsif game.won?
       puts 'Winner'
     end
 
-   puts "#{game.lives_left} lives remaining"
+   puts "#{game.lives_left} lives left"
   end
 
   def welcome
@@ -106,4 +99,4 @@ class View
   end
 end
 
-# HigherLower.new(Game.new, View.new).start
+HigherLower.new(Game.new, View.new).start
