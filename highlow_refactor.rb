@@ -99,4 +99,4 @@ class View
   end
 end
 
-HigherLower.new(Game.new, View.new).start
+# HigherLower.new(Game.new, View.new).start
