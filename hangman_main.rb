@@ -12,7 +12,7 @@ class Hangman
 
   def start_game
     @view.welcome
-    @view.print_dashes(@game, @dictionary.secret)
+    @view.print_dashes(@game, @game.secret)
     until @game.over?(@dictionary.secret)
       guess = @view.read_guess
       @game.take_turn(guess)
