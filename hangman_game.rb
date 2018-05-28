@@ -9,6 +9,10 @@ class Game
    @secret = Dictionary.new.secret
   end
 
+  def set_secret (new_secret) # override the dictionary secret, with a set secret written in the test.
+    @secret = new_secret
+  end
+
   def lives_left
     initial_lives - (saved_guess.uniq - secret).size
   end
