@@ -95,6 +95,31 @@ end
       end
     end
   end
+  describe '#won?'do
+  let(:game) {Game.new}
+    context 'when the game has been won' do
+      context 'when the secret word has been guessed' do
+        it 'is true when the correct letters been guessed' do
 
+          game.set_secret(['g','o'])
+
+          game.take_turn('g')
+          game.take_turn('o')
+
+          expect(game.won?(game.secret)).to be true
+        end
+      end
+      context 'when the secret word has not been guessed' do
+        it 'is false when game is in progress' do
+           
+          game.set_secret(['g','o'])
+
+          game.take_turn('g')
+
+          expect(game.won?(game.secret)).to be false
+        end
+      end
+    end
+  end
 end
   
