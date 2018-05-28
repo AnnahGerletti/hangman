@@ -4,12 +4,12 @@ require "byebug"
 RSpec.describe Game do
   describe "#lives_left" do
     context 'when the game starts with 10 lives' do
-      context 'player makes a wrong guess' do 
+      context 'player makes a wrong guess' do
         it 'player has nine lives left' do
           game = Game.new
           game.set_secret(['c','a','t'])
 
-          game.take_turn("b")
+          game.take_turn('b')
 
           expect(game.lives_left).to eq(9)
         end
@@ -64,6 +64,33 @@ end
 
           expect(game.over?(game.secret)).to be false
 
+        end
+      end
+    end
+  end
+  describe "#lost?" do
+    context 'When the game has been lost' do
+      context 'When a player has run out of lives' do
+        it 'is true when lives are zero' do
+          game = Game.new(initial_lives:2)
+
+          game.set_secret(['g','o'])
+
+          game.take_turn('c')
+          game.take_turn('s')
+
+          expect(game.lost?).to be true
+        end
+      end
+      context 'when the game has not been lost' do
+        it 'is false when there are lives left' do
+          game = Game.new(initial_lives:2)
+
+          game.set_secret(['g', 'o'])
+
+          game.take_turn('d')
+
+          expect(game.lost?).to be false
         end
       end
     end
