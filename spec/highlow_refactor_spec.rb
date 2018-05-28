@@ -111,7 +111,7 @@ RSpec.describe Game do
       end
 
 
-      # it 'returns a negative number if the guess is to high'do
+      it 'returns a negative number if the guess is to high'
       #   game.take_turn(99)
 
       #   expect(game.saved_guess).to all(be < 0)
