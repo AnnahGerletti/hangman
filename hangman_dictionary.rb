@@ -6,6 +6,6 @@ class Dictionary
   SECRET = ['watermelon', 'orange', 'apple', 'kiwi', 'grape']
 
   def initialize
-    @random_word = SECRET.sample.chars
+    @word = SECRET.sample.chars
   end
 end
