@@ -3,7 +3,7 @@
 class Game
   attr_reader :saved_guess, :initial_lives, :secret
 
-  def initialize(secret:, initial_lives: 10 )
+  def initialize(secret:, initial_lives: 10)
    @saved_guess = []
    @initial_lives = initial_lives
    @secret = secret
@@ -35,12 +35,8 @@ class Game
     saved_guess.push(guess)
   end
 
-  def correct_guess(added_guess)
-    if secret.include?(added_guess)
-     true
-    else
-     false
-    end
+  def correct_guess(new_guess)
+    secret.include?(new_guess)
   end
 
   def dashes
