@@ -1,6 +1,5 @@
 require_relative '../hangman_game.rb'
 
-require "byebug"
 RSpec.describe Game do
   describe "#lives_left" do
     context 'when the game starts with 10 lives' do
