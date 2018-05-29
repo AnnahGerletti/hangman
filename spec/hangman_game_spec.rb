@@ -6,8 +6,7 @@ RSpec.describe Game do
     context 'when the game starts with 10 lives' do
       context 'player makes a wrong guess' do
         it 'player has nine lives left' do
-          game = Game.new
-          game.set_secret(['c','a','t'])
+          game = Game.new(secret: ['c','a','t'])
 
           game.take_turn('b')
 
@@ -16,9 +15,7 @@ RSpec.describe Game do
       end
       context 'player guesses correctly' do
         it 'player has all their lives' do
-          game = Game.new 
-
-          game.set_secret(['c','a','t'])
+          game = Game.new(secret: ['c','a','t'])
 
           game.take_turn('a')
           expect(game.lives_left).to eq(10)
@@ -31,34 +28,30 @@ end
     context 'when the game is over' do
       context 'all the lives are gone' do
         it 'player has used all their guesses' do
-          game = Game.new(initial_lives: 2) 
-          
-          game.set_secret(['g','o'])
-          
+          game = Game.new(initial_lives: 2, secret: ['c','a','t'])
+
           game.take_turn('z')
           game.take_turn('n')
     
-          expect(game.over?(game.secret)).to be true
+          expect(game.over?).to be true
         end
       end
       context 'the secret has been guessed' do
         it 'player has made correct guesses' do
-          game = Game.new(initial_lives:2)
-          game.set_secret(['g','o'])
+          game = Game.new(initial_lives:2, secret: ['g','o'])
 
           game.take_turn('g')
           game.take_turn('o')
 
-          expect(game.over?(game.secret)).to be true
+          expect(game.over?).to be true
         end
       end
     end
     context 'when the game is not over' do
-      context 'there are lives left and you have not guessed the secret' do
+      context 'there are lives left' do
+      context 'you have not guessed the secret' do
         it 'is not over when the game is still in progress' do
-          game = Game.new
-          
-          game.set_secret(['g','o'])
+          game = Game.new(secret: ['g','o'])
 
           game.take_turn('o')
 
@@ -66,11 +59,12 @@ end
 
         end
       end
+     end
     end
   end
   describe "#lost?" do
     context 'When the game has been lost' do
-      context 'When a player has run out of lives' do
+      context 'a player has run out of lives' do
         it 'is true when lives are zero' do
           game = Game.new(initial_lives:2)
 
@@ -82,6 +76,7 @@ end
           expect(game.lost?).to be true
         end
       end
+    end
       context 'when the game has not been lost' do
         it 'is false when there are lives left' do
           game = Game.new(initial_lives:2)
@@ -94,11 +89,10 @@ end
         end
       end
     end
-  end
   describe '#won?'do
   let(:game) {Game.new}
     context 'when the game has been won' do
-      context 'when the secret word has been guessed' do
+      context 'the secret word has been guessed' do
         it 'is true when the correct letters been guessed' do
 
           game.set_secret(['g','o'])
@@ -119,6 +113,24 @@ end
           expect(game.won?(game.secret)).to be false
         end
       end
+    end
+  end
+  describe '#take_turn' do
+    context 'when a player makes a guess' do
+      it 'saves gueses to the guess array, and check the correct char is added' do
+        game = Game.new 
+        initial_guess_size = game.saved_guess.size
+
+        game.take_turn('a')
+
+        expect(game.saved_guess.size).to eq(initial_guess_size + 1)
+        expect(game.saved_guess.include?('a')).to be true 
+      end
+    end
+  end
+  describe '#correct_guess' do
+    context 'when a player makes a guess' do
+      context 'the guess is checked'
     end
   end
 end
