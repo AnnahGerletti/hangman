@@ -49,26 +49,24 @@ end
     end
     context 'when the game is not over' do
       context 'there are lives left' do
-      context 'you have not guessed the secret' do
-        it 'is not over when the game is still in progress' do
-          game = Game.new(secret: ['g','o'])
+        context 'you have not guessed the secret' do
+          it 'is not over when the game is still in progress' do
+            game = Game.new(secret: ['g','o'])
 
-          game.take_turn('o')
+            game.take_turn('o')
 
-          expect(game.over?(game.secret)).to be false
-
-        end
+            expect(game.over?).to be false
+         end
+       end
       end
-     end
     end
   end
+
   describe "#lost?" do
     context 'When the game has been lost' do
       context 'a player has run out of lives' do
         it 'is true when lives are zero' do
-          game = Game.new(initial_lives:2)
-
-          game.set_secret(['g','o'])
+          game = Game.new(initial_lives: 2, secret: ['g','o'])
 
           game.take_turn('c')
           game.take_turn('s')
@@ -79,9 +77,7 @@ end
     end
       context 'when the game has not been lost' do
         it 'is false when there are lives left' do
-          game = Game.new(initial_lives:2)
-
-          game.set_secret(['g', 'o'])
+          game = Game.new(initial_lives: 2, secret: ['g','o'])
 
           game.take_turn('d')
 
@@ -89,49 +85,83 @@ end
         end
       end
     end
+
   describe '#won?'do
-  let(:game) {Game.new}
+  let(:game) {Game.new(secret: ['g','o'])}
+
     context 'when the game has been won' do
       context 'the secret word has been guessed' do
         it 'is true when the correct letters been guessed' do
 
-          game.set_secret(['g','o'])
-
           game.take_turn('g')
           game.take_turn('o')
 
-          expect(game.won?(game.secret)).to be true
+          expect(game.won?).to be true
         end
       end
-      context 'when the secret word has not been guessed' do
+      context 'the secret word has not been guessed' do
         it 'is false when game is in progress' do
-           
-          game.set_secret(['g','o'])
 
           game.take_turn('g')
 
-          expect(game.won?(game.secret)).to be false
+          expect(game.won?).to be false
         end
       end
     end
   end
   describe '#take_turn' do
     context 'when a player makes a guess' do
-      it 'saves gueses to the guess array, and check the correct char is added' do
-        game = Game.new 
-        initial_guess_size = game.saved_guess.size
+      context 'check the correct char is added' do
+        it 'saves gueses to the guess array' do
+          game = Game.new(secret: ['g','o'])
 
-        game.take_turn('a')
+          initial_guess_size = game.saved_guess.size
 
-        expect(game.saved_guess.size).to eq(initial_guess_size + 1)
-        expect(game.saved_guess.include?('a')).to be true 
+          game.take_turn('a')
+
+          expect(game.saved_guess.size).to eq(initial_guess_size + 1)
+          expect(game.saved_guess.include?('a')).to be true
+        end
       end
     end
   end
+
   describe '#correct_guess' do
     context 'when a player makes a guess' do
-      context 'the guess is checked'
+      it 'is checked against the secret word' do
+        game = Game.new(secret: ['g','o'])
+
+        game.take_turn('o')
+
+        expect(game.secret.include?('o')).to be true
+      end
     end
   end
+
+  describe '#dashes' do
+    let(:game) {Game.new(secret: ['g','o'])}
+
+    context 'when a game starts' do
+      it 'produces all dashes' do
+
+        expect(game.dashes).to eq('-,-')
+      end
+    end
+    context 'guess correctly fill in letter' do
+      it 'reveals one letter that is guessed correctly' do
+        game.take_turn('g')
+
+        expect(game.dashes).to eq('g,-')
+      end
+    end
+    context 'guess everything right' do
+      it 'shows no dashes' do
+        game.take_turn('g')
+        game.take_turn('o')
+
+        expect(game.dashes).to eq('g,o')
+      end
+    end
+end
 end
   
