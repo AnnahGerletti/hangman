@@ -1,38 +1,19 @@
-# game picks a number
-# prompt status of game
-# player enters a guess
-# guess is checked against random num
-# game tells player if number is higher or lower and how many lives they have left
-#
 
-class HigherLower
-  def initialize(game, view)
-    @game = game
-    @view = view
-  end
 
-  def start
-    @view.welcome
-    until @game.over?
-      input = @view.read_input(@game)
-      turn_result = @game.take_turn(input)
-      @view.print_turn_status(turn_result, @game)
-    end
-  end
-end
+# frozen_string_literal: true
 
 class Game
-  attr_reader :saved_guess, :random_num
-  INITIAL_LIVES = 6
+  attr_reader :saved_guess, :random_num, :initial_lives
   NUMBERS = Array(1..100)
 
-  def initialize(random_num = NUMBERS.sample)
+  def initialize(random_num: NUMBERS.sample, initial_lives: 6)
     @random_num = random_num
     @saved_guess = []
+    @initial_lives = initial_lives
   end
 
   def valid_guess?(input)
-    input >0 && input < 100
+    input.positive? && input < 100
   end
 
   def over?
@@ -40,7 +21,7 @@ class Game
   end
 
   def lost?
-    saved_guess.length == INITIAL_LIVES
+    saved_guess.length == initial_lives
   end
 
   def won?
@@ -49,36 +30,36 @@ class Game
 
   def take_turn(input)
     @saved_guess.push(input)
-    input - @random_num
+    input - random_num
   end
 
   def lives_left
-      INITIAL_LIVES - @saved_guess.length
+    initial_lives - saved_guess.length
   end
 end
 
 class View
   def tohigh_or_tolow(turn_result)
     if turn_result.positive?
-      puts 'Too High'
+      puts "\tToo High"
     elsif turn_result.negative?
-      puts 'Too Low'
+      puts "\tToo Low"
     else
-      puts 'Just Right'
+      puts "\tJust Right"
     end
     turn_result
   end
 
   def print_turn_status(turn_result, game)
     tohigh_or_tolow(turn_result)
-    
+
     if game.lost?
       puts "Game Over. The hidden Number was #{game.random_num}"
     elsif game.won?
       puts 'Winner'
     end
 
-   puts "#{game.lives_left} lives left"
+    puts "#{game.lives_left} lives left"
   end
 
   def welcome
@@ -98,5 +79,3 @@ class View
     input
   end
 end
-
-# HigherLower.new(Game.new, View.new).start
