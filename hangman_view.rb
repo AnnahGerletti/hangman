@@ -28,7 +28,7 @@ class View
   end
 
   def print_guess_arr(saved_guess)
-    puts 'what you have already guesed'
+    puts "\t what you have already guesed'
     puts saved_guess.join(' ')
   end
 
