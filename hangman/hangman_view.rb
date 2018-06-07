@@ -10,14 +10,14 @@ class View
 
   def read_guess
     puts 'Please guess a letter a-z'
-    guess = gets.chomp
+    gets.chomp
   end
 
   def print(dashes)
     puts dashes
   end
 
-  def print_turn_status(turn_result, game)
+  def print_turn_result(turn_result)
     if turn_result == true
       puts 'Correct guess'
     else

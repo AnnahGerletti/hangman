@@ -52,7 +52,7 @@ RSpec.describe Hangman_start do
           true
         )
 
-        expect(view).to receive(:print_turn_status).exactly(1).times
+        expect(view).to receive(:print_turn_result).exactly(1).times
 
         Hangman_start.new(view, game).start(view)
       end

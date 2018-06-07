@@ -13,7 +13,7 @@ require_relative './hangman_start'
 #       false,
 #       true
 #    )
-#    expect(view).to receive(:print_turn_status).exactly(2).times
+#    expect(view).to receive(:print_turn_result).exactly(2).times
 
 # it accepts guesses from the user
 # expect(view).to receive(:read_guess).and_return('a')

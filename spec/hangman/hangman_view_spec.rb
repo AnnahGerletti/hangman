@@ -12,7 +12,7 @@ RSpec.describe View do
         allow(game).to receive(:dashes)
         allow(game).to receive(:lives_left)
 
-        expect{ view.print_turn_status(true, game) }.to output(/Correct guess\n/).to_stdout
+        expect{ view.print_turn_result(true) }.to output(/Correct guess\n/).to_stdout
 
       end
     end
