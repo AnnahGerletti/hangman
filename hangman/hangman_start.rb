@@ -5,7 +5,7 @@ class Hangman_start
     @game = game
   end
 
-  def start(view)
+  def start(_view)
     @view.welcome  
     @view.print(@game.dashes)
     game_loop until @game.over?
