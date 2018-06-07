@@ -1,4 +1,5 @@
-require_relative '../hangman_dictionary.rb'
+require_relative '../../hangman/hangman_dictionary.rb'
+# require './hangman/hangman_dictionary.rb' => another way 
 
 RSpec.describe Dictionary do
 describe '#intialize' do 

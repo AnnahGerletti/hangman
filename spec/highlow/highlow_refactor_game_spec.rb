@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../highlow_refactor'
+require_relative '../../highlow/highlow_refactor_game'
 
 RSpec.describe Game do
   let(:game) { Game.new(random_num: 77, initial_lives: 2) }

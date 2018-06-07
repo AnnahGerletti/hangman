@@ -1,12 +1,14 @@
 
 
+# frozen_string_literal: true
+
 class Game
   attr_reader :saved_guess, :initial_lives, :secret
 
   def initialize(secret:, initial_lives: 10)
-   @saved_guess = []
-   @initial_lives = initial_lives
-   @secret = secret
+    @saved_guess = []
+    @initial_lives = initial_lives
+    @secret = secret
   end
 
   def set_secret(new_secret) # override the dictionary secret, with a set secret written in the test.
@@ -35,8 +37,8 @@ class Game
     saved_guess.push(guess)
   end
 
-  def correct_guess(new_guess)
-    secret.include?(new_guess)
+  def correct_guess(checked_guess)
+    secret.include?(checked_guess)
   end
 
   def dashes
@@ -48,4 +50,15 @@ class Game
       end
     end.join ','
   end
+
+  def charactar_check(guess)
+    guess.each_char do |char|
+      if char.match(/\A[a-z]\z/)
+        char
+      else
+        puts "\t #{char} is not a valid guess"
+      end
+    end
+  end
+
 end

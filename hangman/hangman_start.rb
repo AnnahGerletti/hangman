@@ -1,5 +1,4 @@
 class Hangman_start
-  attr_accessor(:view)
 
   def initialize(view, game)
     @view = view
@@ -7,15 +6,20 @@ class Hangman_start
   end
 
   def start(view)
-    @view.welcome
+    @view.welcome  
     @view.print(@game.dashes)
-    until @game.over?
-      guess = @view.read_guess
-      @game.take_turn(guess)
-      @view.print_guess_arr(@game.saved_guess)
-      @game.lives_left
-      turn_result = @game.correct_guess(guess)
-      @view.print_turn_status(turn_result, @game)
-    end
+    game_loop until @game.over?
+  end
+
+  def game_loop 
+    guess = @view.read_guess
+    checked_guess = @game.charactar_check(guess)
+    @game.take_turn(checked_guess)
+    @game.lives_left
+    turn_result = @game.correct_guess(checked_guess)
+    @view.print_turn_status(turn_result, @game)
+    @view.print_dashes(@game)
+    @view.print_guess_arr(@game.saved_guess)
   end
 end
+ 

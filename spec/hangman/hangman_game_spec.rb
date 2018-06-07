@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../hangman_game.rb'
+require_relative '../../hangman/hangman_game.rb'
 
 RSpec.describe Game do
   describe '#lives_left' do
@@ -108,6 +108,7 @@ RSpec.describe Game do
       end
     end
   end
+
   describe '#take_turn' do
     context 'when a player makes a guess' do
       context 'check the correct char is added' do
@@ -161,4 +162,18 @@ RSpec.describe Game do
       end
     end
   end
+
+  describe '#charactar_check' do
+    context 'When a user enters a response' do
+      it 'is a letter between a-z' do
+        view = instance_double('View')
+        game = Game.new(secret: %w[c a t])
+
+        allow(view).to receive(:read_guess).and_return('a')
+        allow(game).to receive(:charactar_check).and_
+
+        expect(game).to receive(:charactar_check).with('a')
+    end
+  end
+end
 end
