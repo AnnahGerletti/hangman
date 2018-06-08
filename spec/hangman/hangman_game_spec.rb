@@ -164,16 +164,19 @@ RSpec.describe Game do
   end
 
   describe '#charactar_check' do
+    let(:game) { Game.new(secret: %w[c a t]) }
     context 'When a user enters a response' do
       it 'is a letter between a-z' do
-        view = instance_double('View')
-        game = Game.new(secret: %w[c a t])
-
-        allow(view).to receive(:read_guess).and_return('a')
-        allow(game).to receive(:charactar_check).and_
 
         expect(game).to receive(:charactar_check).with('a')
+
+        game.charactar_check('a')
+      end
+      it 'is not a letter' do
+        expect(game).to receive(:charactar_check).with(4)
+
+        game.charactar_check(4)
+      end
     end
   end
-end
 end
