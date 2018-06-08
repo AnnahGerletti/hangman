@@ -19,9 +19,9 @@ class View
 
   def print_turn_result(turn_result)
     if turn_result == true
-      puts 'Correct guess'
+      puts "\t Correct guess"
     else
-      puts 'Wrong Guess'
+      puts "\t Wrong Guess"
     end
   end
 

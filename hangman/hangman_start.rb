@@ -1,25 +1,24 @@
-class Hangman_start
+# frozen_string_literal: true
 
+class Hangman_start
   def initialize(view, game)
     @view = view
     @game = game
   end
 
   def start(_view)
-    @view.welcome  
+    @view.welcome
     @view.print(@game.dashes)
     game_loop until @game.over?
   end
 
-  def game_loop 
+  def game_loop
     guess = @view.read_guess
-    checked_guess = @game.charactar_check(guess)
-    @game.take_turn(checked_guess)
     @game.lives_left
+    checked_guess = @game.charactar_check(guess)
     turn_result = @game.correct_guess(checked_guess)
     @view.print_turn_result(turn_result)
     @view.print_dashes(@game)
     @view.print_guess_arr(@game.saved_guess)
   end
 end
- 

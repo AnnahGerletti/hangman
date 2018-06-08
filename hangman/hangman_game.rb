@@ -34,7 +34,7 @@ class Game
   end
 
   def take_turn(guess)
-    saved_guess.push(guess)
+        saved_guess.push(guess)
   end
 
   def correct_guess(checked_guess)
@@ -54,11 +54,11 @@ class Game
   def charactar_check(guess)
     guess.each_char do |char|
       if char.match(/\A[a-z]\z/)
-        char
+        take_turn(char)
       else
         puts "\t #{char} is not a valid guess"
       end
-    end
+    end 
   end
 
 end
