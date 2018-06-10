@@ -14,8 +14,8 @@ class Hangman_start
 
   def game_loop
     guess = @view.read_guess
-    @game.lives_left
     checked_guess = @game.charactar_check(guess)
+    @game.lives_left
     turn_result = @game.correct_guess(checked_guess)
     @view.print_turn_result(turn_result)
     @view.print_dashes(@game)
