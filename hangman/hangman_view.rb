@@ -3,6 +3,7 @@
 
 class View
   def initialize(gameStrings)
+    @gameStrings = gameStrings
   end
 
   def welcome
@@ -24,18 +25,28 @@ class View
 
   def print_turn_result(turn_result)
     if turn_result == true
-      puts "\t Correct guess"
+      puts correct_str
     else
       puts "\t Wrong Guess"
     end
   end
 
-  def print_dashes(game)
-    print(game.dashes)
-    puts "\t #{game.lives_left} lives remaining"
+  def correct_str
+    "\t Correct guess"
+  end
+
+  def print_dashes(lives_left, dashes)
+    print(dashes)
+    puts "\t #{lives_left} lives remaining"
   end
 
   def print_guess_arr(saved_guess)
     puts "\t what has been guessed => #{saved_guess.join(' ')}"
+  end
+end
+
+class SpanishHangManView < View
+  def correct_str
+    'Correcto guesso'
   end
 end

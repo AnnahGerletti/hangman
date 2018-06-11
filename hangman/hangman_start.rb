@@ -18,7 +18,7 @@ class Hangman_start
     @game.lives_left
     turn_result = @game.correct_guess(checked_guess)
     @view.print_turn_result(turn_result)
-    @view.print_dashes(@game)
+    @view.print_dashes(@game.lives_left, @game.dashes)
     @view.print_guess_arr(@game.saved_guess)
   end
 end
