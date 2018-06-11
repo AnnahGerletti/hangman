@@ -2,17 +2,16 @@
 # frozen_string_literal: true
 
 class View
-  def initialize(strings)
-    @strings = strings
+  def initialize(gameStrings)
   end
 
   def welcome
-    puts @strings.design
-    puts @strings.hi_msg
-    puts @strings.lives_msg
-    puts @strings.rules_msg
+    puts @gameStrings.design
+    puts @gameStrings.hi_msg
+    puts @gameStrings.lives_msg
+    puts @gameStrings.rules_msg
     puts 'Lets play!'
-    puts @strings.design
+    puts @gameStrings.design
   end
 
   def read_guess

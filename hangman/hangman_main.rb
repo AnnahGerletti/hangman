@@ -25,8 +25,8 @@ require_relative './hangman_strings'
 # Hangman.new(View.new, Game.new(secret: Dictionary.new.word_sample)).start_game
 
 ## toh's stuff
-strings = Strings.new
-view = View.new(strings)
+gameStrings = EnglishGame.new
+view = View.new(gameStrings)
 dict = Dictionary.new
 game = Game.new(dict)
 
