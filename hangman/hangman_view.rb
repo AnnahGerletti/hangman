@@ -2,19 +2,25 @@
 # frozen_string_literal: true
 
 class View
+  def initialize(strings)
+    @strings = strings
+  end
+
   def welcome
-    puts 'Welcome to The Hangman Game'
-    puts 'You have 10 chances to guess the word'
-    puts 'Lets play'
+    puts @strings.design
+    puts @strings.hi_msg
+    puts @strings.lives_msg
+    puts @strings.rules_msg
+    puts 'Lets play!'
+    puts @strings.design
   end
 
   def read_guess
-    puts 'Please guess a letter a-z'
     gets.chomp
   end
 
   def print(dashes)
-    puts dashes
+    puts "\t #{dashes}"
   end
 
   def print_turn_result(turn_result)

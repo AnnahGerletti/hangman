@@ -2,7 +2,7 @@ require_relative './hangman_game'
 require_relative './hangman_view'
 require_relative './hangman_dictionary'
 require_relative './hangman_start'
-
+require_relative './hangman_strings'
 # test welcomes the user 
 # expect(view).to receive(:print).with(game.dashes)
 
@@ -25,7 +25,8 @@ require_relative './hangman_start'
 # Hangman.new(View.new, Game.new(secret: Dictionary.new.word_sample)).start_game
 
 ## toh's stuff
-view = View.new
+strings = Strings.new
+view = View.new(strings)
 dict = Dictionary.new
 game = Game.new(secret: dict.word)
 
