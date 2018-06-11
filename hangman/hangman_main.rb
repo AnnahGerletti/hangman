@@ -28,6 +28,6 @@ require_relative './hangman_strings'
 strings = Strings.new
 view = View.new(strings)
 dict = Dictionary.new
-game = Game.new(secret: dict.word)
+game = Game.new(dict)
 
 Hangman_start.new(view, game).start(view)

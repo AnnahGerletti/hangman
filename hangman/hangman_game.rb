@@ -5,10 +5,10 @@
 class Game
   attr_reader :saved_guess, :initial_lives, :secret
 
-  def initialize(secret:, initial_lives: 10)
+  def initialize(dict, initial_lives: 10)
     @saved_guess = []
     @initial_lives = initial_lives
-    @secret = secret
+    @secret = dict.word
   end
 
   def set_secret(new_secret) # override the dictionary secret, with a set secret written in the test.
@@ -34,7 +34,7 @@ class Game
   end
 
   def take_turn(guess)
-        saved_guess.push(guess)
+      saved_guess.push(guess)
   end
 
   def correct_guess(checked_guess)
