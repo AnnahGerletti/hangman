@@ -1,19 +1,16 @@
-require_relative '../../hangman/hangman_view.rb'
+# frozen_string_literal: true
 
+require_relative '../../hangman/hangman_view.rb'
+require_relative '../../hangman/hangman_strings.rb'
 
 RSpec.describe View do
   describe '#print_turn_status' do
     context 'When a player has taken a turn' do
       it 'prints the correct response' do
-       
-        view = View.new
-        game = instance_double('Game')
-        
-        allow(game).to receive(:dashes)
-        allow(game).to receive(:lives_left)
+        mock_gameStrings = instance_double('EnglishGame')
+        view = View.new(mock_gameStrings)
 
-        expect{ view.print_turn_result(true) }.to output(/Correct guess\n/).to_stdout
-
+        expect { view.print_turn_result(false) }.to output(/Wrong Guess/).to_stdout
       end
     end
   end
