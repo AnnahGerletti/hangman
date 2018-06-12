@@ -2,24 +2,35 @@
 
 require_relative '../../hangman/hangman_game.rb'
 
+class MockDictionary
+  def word
+    %w[c a t]
+  end
+end
+
 RSpec.describe Game do
+  let(:mock_dictionary) {instance_double('Dictionary')}
+  let(:game) {Game.new(mock_dictionary, initial_lives: 2)}
+
+  before(:each) do 
+    allow(mock_dictionary).to receive(:word).and_return(%w[c a t])
+  end
+
   describe '#lives_left' do
     context 'when the game starts with 10 lives' do
       context 'player makes a wrong guess' do
         it 'player has nine lives left' do
-          game = Game.new(secret: %w[c a t])
 
           game.take_turn('b')
 
-          expect(game.lives_left).to eq(9)
+          expect(game.lives_left).to eq(1)
         end
       end
       context 'player guesses correctly' do
         it 'player has all their lives' do
-          game = Game.new(secret: %w[c a t])
 
           game.take_turn('a')
-          expect(game.lives_left).to eq(10)
+          expect(game.lives_left).to eq(2)
         end
       end
     end
@@ -29,7 +40,6 @@ RSpec.describe Game do
     context 'when the game is over' do
       context 'all the lives are gone' do
         it 'player has used all their guesses' do
-          game = Game.new(initial_lives: 2, secret: %w[c a t])
 
           game.take_turn('z')
           game.take_turn('n')
@@ -39,7 +49,6 @@ RSpec.describe Game do
       end
       context 'the secret has been guessed' do
         it 'player has made correct guesses' do
-          game = Game.new(initial_lives: 2, secret: %w[g o])
 
           game.take_turn('g')
           game.take_turn('o')
@@ -52,7 +61,6 @@ RSpec.describe Game do
       context 'there are lives left' do
         context 'you have not guessed the secret' do
           it 'is not over when the game is still in progress' do
-            game = Game.new(secret: %w[g o])
 
             game.take_turn('o')
 
@@ -67,10 +75,9 @@ RSpec.describe Game do
     context 'When the game has been lost' do
       context 'a player has run out of lives' do
         it 'is true when lives are zero' do
-          game = Game.new(initial_lives: 2, secret: %w[g o])
 
-          game.take_turn('c')
-          game.take_turn('s')
+          game.take_turn('f')
+          game.take_turn('g')
 
           expect(game.lost?).to be true
         end
@@ -78,7 +85,6 @@ RSpec.describe Game do
     end
     context 'when the game has not been lost' do
       it 'is false when there are lives left' do
-        game = Game.new(initial_lives: 2, secret: %w[g o])
 
         game.take_turn('d')
 
@@ -88,13 +94,12 @@ RSpec.describe Game do
   end
 
   describe '#won?' do
-    let(:game) { Game.new(secret: %w[g o]) }
-
     context 'when the game has been won' do
       context 'the secret word has been guessed' do
         it 'is true when the correct letters been guessed' do
-          game.take_turn('g')
-          game.take_turn('o')
+          game.take_turn('c')
+          game.take_turn('a')
+          game.take_turn('t')
 
           expect(game.won?).to be true
         end
@@ -113,7 +118,6 @@ RSpec.describe Game do
     context 'when a player makes a guess' do
       context 'check the correct char is added' do
         it 'saves gueses to the guess array' do
-          game = Game.new(secret: %w[g o])
 
           initial_guess_size = game.saved_guess.size
 
@@ -126,56 +130,36 @@ RSpec.describe Game do
     end
   end
 
-  describe '#correct_guess' do
+  describe '#correct_guess?' do
     context 'when a player makes a guess' do
       it 'is checked against the secret word' do
-        game = Game.new(secret: %w[g o])
 
-        game.take_turn('o')
-
-        expect(game.secret.include?('o')).to be true
+        expect(game.correct_guess?('c')).to be true
       end
     end
   end
 
   describe '#dashes' do
-    let(:game) { Game.new(secret: %w[g o]) }
 
     context 'when a game starts' do
       it 'produces all dashes' do
-        expect(game.dashes).to eq('-,-')
+        expect(game.dashes).to eq('-,-,-')
       end
     end
     context 'guess correctly fill in letter' do
       it 'reveals one letter that is guessed correctly' do
-        game.take_turn('g')
+        game.take_turn('c')
 
-        expect(game.dashes).to eq('g,-')
+        expect(game.dashes).to eq('c,-,-')
       end
     end
     context 'guess everything right' do
       it 'shows no dashes' do
-        game.take_turn('g')
-        game.take_turn('o')
+        game.take_turn('c')
+        game.take_turn('a')
+        game.take_turn('t')
 
-        expect(game.dashes).to eq('g,o')
-      end
-    end
-  end
-
-  describe '#charactar_check' do
-    let(:game) { Game.new(secret: %w[c a t]) }
-    context 'When a user enters a response' do
-      it 'is a letter between a-z' do
-
-        expect(game).to receive(:charactar_check).with('a')
-
-        game.charactar_check('a')
-      end
-      it 'is not a letter' do
-        expect(game).to receive(:charactar_check).with(4)
-
-        game.charactar_check(4)
+        expect(game.dashes).to eq('c,a,t')
       end
     end
   end
