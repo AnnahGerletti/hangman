@@ -5,7 +5,7 @@
 class Game
   attr_reader :saved_guess, :initial_lives, :secret
 
-  def initialize(dict, initial_lives: 10)
+  def initialize(dict,initial_lives: 10)
     @saved_guess = []
     @initial_lives = initial_lives
     @secret = dict.word
@@ -37,8 +37,8 @@ class Game
       saved_guess.push(guess)
   end
 
-  def correct_guess(checked_guess)
-    secret.include?(checked_guess)
+  def correct_guess?(guess)
+    secret.include?(guess)
   end
 
   def dashes
@@ -51,14 +51,6 @@ class Game
     end.join ','
   end
 
-  def charactar_check(guess)
-    guess.each_char do |char|
-      if char.match(/\A[a-z]\z/)
-        take_turn(char)
-      else
-        puts "\t #{char} is not a valid guess"
-      end
-    end 
-  end
-
+     
+ 
 end
