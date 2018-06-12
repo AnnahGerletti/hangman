@@ -22,6 +22,10 @@ class View
   def print(dashes)
     puts "\t #{dashes}"
   end
+  
+  def invalid_input
+    puts "\t invalid input, please guess again"
+  end
 
   def print_turn_result(turn_result)
     if turn_result == true
@@ -42,6 +46,12 @@ class View
 
   def print_guess_arr(saved_guess)
     puts "\t what has been guessed => #{saved_guess.join(' ')}"
+  end
+
+  def print_end_of_turn_messages(turn_result, lives_left, dashes, saved_guess)
+      print_turn_result(turn_result)
+      print_dashes(lives_left, dashes)
+      print_guess_arr(saved_guess)
   end
 end
 
